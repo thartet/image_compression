@@ -63,6 +63,7 @@ compress.sh /data/<file>
 - [x] Implementation of different treatments for png, jpeg and webp files.
 - [x] Reduction of the quality of the image.
 - [x] Usage with -h option
+- [x] Add a Dockerfile
 - [ ] Modify the script so that it could be implemented as a plugin on a web site.
 - [ ] Gestion of the codes returned by the script.
 - [ ] Adaptative compression (low, medium and high mode)

@@ -4,56 +4,62 @@
 # This script is used to reduce the image size and optimize the number of colors of the image.
 
 function pngTreatment {
-
-    name=$(echo "$1" | sed 's/\.png$//')
+    name=$(basename -- $1)
+    name=$(echo $name | cut -f 1 -d '.')
+    tmp_file=$(mktemp)
     color_number=$(identify -format %k "$1")
 
     if [ $color_number -gt 256 ]
     then
         # Reduce the number of colors in the PNG using pngquant
-        pngquant --quality=0-100 --force --speed=1 --strip --output "/tmp/coloured_$1" --verbose 256 -- "$1" 
+        pngquant --quality=0-100 --force --speed=1 --strip --output $tmp_file --verbose 256 -- "$1" 
     fi
     
     # Reduce the file size of the picture using ImageMagick
-    convert "/tmp/coloured_$1" -strip -quality 65% "reduced_$name.webp"
+    convert $tmp_file -strip -quality 65% "reduced_$name.webp"
 
     # Remove the png file
-    rm "/tmp/coloured_$1"
+    rm $tmp_file
     echo "Reduction of $1 complete. The new file is reduced_$name.webp"
 
 }
 
 function jpgTreatment {
-    name=$(echo "$1" | sed 's/\.jpg$//')
+    name=$(basename -- $1)
+    name=$(echo $name | cut -f 1 -d '.')
+    tmp_file=$(mktemp)
     color_number=$(identify -format %k "$1")
 
     if [ $color_number -gt 256 ]
     then
         #Reduce the number of colors in the PNG using ImageMagick
-        convert "$1" -strip -posterize 256 "/tmp/coloured_$1"
+        convert "$1" -strip -posterize 256 $tmp_file
     fi
 
     # Reduce the file size of the picture using ImageMagick
-    convert "/tmp/coloured_$1" -strip -quality 65% "reduced_$name.webp"
+    convert $tmp_file -strip -quality 65% "reduced_$name.webp"
 
     # Remove the jpeg file
-    rm "/tmp/coloured_$1"
+    rm $tmp_file
     echo "Reduction of $1 complete. The new file is reduced_$name.webp"
 }
 
 function webpTreatment {
-    name=$(echo "$1" | sed 's/\.webp$//')
+    name=$(basename -- $1)
+    name=$(echo $name | cut -f 1 -d '.')
+    tmp_file=$(mktemp)
     color_number=$(identify -format %k "$1")
 
     if [ $color_number -gt 256 ]
     then
         #Reduce the number of colors in the webp using ImageMagick
-        convert "$1" -strip -posterize 256 "/tmp/coloured_$1"
+        convert "$1" -strip -posterize 256 $tmp_file
     fi
 
     # Reduce the file size of the picture using ImageMagick
-    convert "/tmp/coloured_$1" -strip -quality 65% "reduced_$name.webp"
-    rm "/tmp/coloured_$1"
+    convert $tmp_file -strip -quality 65% "reduced_$name.webp"
+
+    rm $tmp_file
     echo "Reduction of $1 complete. The new file is reduced_$name.webp"
 }
 
