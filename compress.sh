@@ -4,7 +4,7 @@
 # This script is used to reduce the image size and optimize the number of colors of the image.
 
 function pngTreatment {
-    name=$(basename -- $1)
+    name=$(basename -- "$1")
     name=$(echo $name | cut -f 1 -d '.')
     tmp_file=$(mktemp)
     color_number=$(identify -format %k "$1")
@@ -25,7 +25,7 @@ function pngTreatment {
 }
 
 function jpgTreatment {
-    name=$(basename -- $1)
+    name=$(basename -- "$1")
     name=$(echo $name | cut -f 1 -d '.')
     tmp_file=$(mktemp)
     color_number=$(identify -format %k "$1")
@@ -45,7 +45,7 @@ function jpgTreatment {
 }
 
 function webpTreatment {
-    name=$(basename -- $1)
+    name=$(basename -- "$1")
     name=$(echo $name | cut -f 1 -d '.')
     tmp_file=$(mktemp)
     color_number=$(identify -format %k "$1")
@@ -71,7 +71,7 @@ then
 fi
 
 # Help message
-if [ $1 == "-h" ]
+if [ "$1" == "-h" ]
 then
     echo "This script is used to reduce the image size and optimize the number of colors of the image."
     echo "Usage: img2.sh <file>"
@@ -80,20 +80,20 @@ then
 fi
 
 # Check if the file exists
-if [ ! -f $1 ]
+if [ ! -f "$1" ]
 then
     echo "The file does not exist"
     exit 1
 fi
 
 # Treat the file according to its extension
-case $(file --extension -b $1) in
+case $(file --extension -b "$1") in
 
-    "png") pngTreatment $1;;
+    "png") pngTreatment "$1";;
 
-    "jpeg/jpg/jpe/jfif") jpgTreatment $1;;
+    "jpeg/jpg/jpe/jfif") jpgTreatment "$1";;
 
-    "webp") webpTreatment $1;;
+    "webp") webpTreatment "$1";;
 
     "svg") echo "The file is a svg file. No treatment is needed.";return 0;;
 
