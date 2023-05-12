@@ -10,7 +10,11 @@ sudo apt update
 ```
 Run the command to install the library : 
 ```bash
+# Debian based
 sudo apt install -y pngquant
+
+# Arch based
+sudo pacman -S pngquant
 ```
 You can check the version to verify that the library was installed : 
 ```bash
@@ -23,17 +27,33 @@ convert -version
 ```
 Run the command to install the software :
 ```bash
+# Debian based
 sudo apt install -y imagemagick
+
+# Arch based
+sudo pacman -S imagemagick
 ```
 You can check the version to verify that the library was installed : 
 ```bash
 convert -version
 ```
-<br>
+
+## How to run
 Then you can run the script with the images that you want to compress. <br>
 
 ```bash
-bash compress.sh <file>
+./compress.sh <file>
+```
+
+## Usage with docker
+```bash
+docker build -t image_compress
+docker run -it --rm -v /path/to/image/folder:/data image_compress
+```
+
+Then you can run the script
+```bash
+compress.sh /data/<file>
 ```
 
 ***You can only use this script to compress png, jpeg and webp files !***

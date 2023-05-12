@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Copyright (C) 2023 thartet https://github.com/thartet
 # This script is used to reduce the image size and optimize the number of colors of the image.
