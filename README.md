@@ -6,7 +6,11 @@ To run the script you need to install two libraries : *pngquant* and *ImageMagic
 ### Install pngquant : <br>
 Update the package list : 
 ```bash
+# Debian based
 sudo apt update
+
+# Arch based
+sudo pacman -Sy
 ```
 Run the command to install the library : 
 ```bash

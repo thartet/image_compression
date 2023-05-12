@@ -67,6 +67,7 @@ function webpTreatment {
 if [ $# -ne 1 ]
 then
     echo "The number of arguments is not correct"
+    echo "Usage: img2.sh <file>"
     exit 1
 fi
 
@@ -80,9 +81,9 @@ then
 fi
 
 # Check if the file exists
-if [ ! -f "$1" ]
+if [ ! -f "$1" ] || [ ! -r "$1" ]
 then
-    echo "The file does not exist"
+    echo "The file does not exist or is not readable"
     exit 1
 fi
 
@@ -95,9 +96,9 @@ case $(file --extension -b "$1") in
 
     "webp") webpTreatment "$1";;
 
-    "svg") echo "The file is a svg file. No treatment is needed.";return 0;;
+    "svg") echo "The file is a svg file. No treatment is needed.";exit 0;;
 
-    *) echo "The type of your file is not supported. \n Supported types are: .png, .jpeg, .webp, .svg";return 1;;
+    *) echo "The type of your file is not supported. \n Supported types are: .png, .jpeg, .webp, .svg";exit 1;;
 
 esac
 
